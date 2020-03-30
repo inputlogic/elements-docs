@@ -5,8 +5,8 @@ const environments = {
   development: [
     'localhost:3000'
   ],
-  staging: ['pwa-starter-html-dev.herokuapp.com'],
-  production: ['pwa-starter-html-prod.herokuapp.com', 'pwa-starter.co', 'www.pwa-starter.co']
+  staging: ['elements-docs-dev.herokuapp.com'],
+  production: ['elements-docs.herokuapp.com']
 }
 
 export const environment = (() => {

@@ -17,9 +17,9 @@ const PROTOCOL = window.location.protocol
 
 export const API_URL = {
   test: '',
-  development: `${PROTOCOL}//pwa-starter-api-dev.herokuapp.com`,
-  staging: `${PROTOCOL}//pwa-starter-api-dev.herokuapp.com`,
-  production: `${PROTOCOL}//api.pwa-starter.co`
+  development: `${PROTOCOL}//elements-docs-api-dev.herokuapp.com`,
+  staging: `${PROTOCOL}//elements-docs-api-dev.herokuapp.com`,
+  production: `${PROTOCOL}//elements-docs-api.herokuapp.com`
 }[environment]
 
 export const HEADLESS = navigator.userAgent === 'ReactSnap'
