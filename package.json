@@ -28,6 +28,7 @@
   },
   "standard": {
     "ignore": [
+      "src/components.js",
       "server/bundle.js"
     ]
   },

@@ -21,17 +21,12 @@ import '/styles/modals.less'
 import '/styles/form.less'
 
 import Main, { routes as mainRoutes } from '/apps/main'
-import Dashboard, { routes as dashboardRoutes } from '/apps/dashboard'
 
 // Define our top-level routes
 const routes = {
   main: {
     routes: mainRoutes,
     component: Main
-  },
-  dashboard: {
-    routes: dashboardRoutes,
-    component: Dashboard
   }
 }
 

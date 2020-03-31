@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-
+import Level from '@app-elements/level'
 import store from '/store'
 
 import './element-holder.less'
@@ -56,7 +56,7 @@ if (typeof document !== 'undefined') {
   }, 150), true)
 }
 
-export const ElementHolder = ({ heading, children }) => {
+export const ElementHolder = ({ heading, name, version, children }) => {
   const ref = useRef(null)
   useEffect(() => {
     refs.push(ref.current)
@@ -73,7 +73,10 @@ export const ElementHolder = ({ heading, children }) => {
   return (
     <div id={heading} className='element-holder' ref={ref}>
       <div className='inside'>
-        <h2>{heading}</h2>
+        <Level>
+          <h2>{heading} <span className='version'>{version}</span></h2>
+          <p><code>npm i --save {name}</code></p>
+        </Level>
         {children}
       </div>
     </div>
