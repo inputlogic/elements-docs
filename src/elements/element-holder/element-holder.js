@@ -75,7 +75,7 @@ export const ElementHolder = ({ heading, name, version, children }) => {
       <div className='inside'>
         <Level>
           <h2>{heading} <span className='version'>{version}</span></h2>
-          <p><code>npm i --save {name}</code></p>
+          <p><code className='npm-install'>npm i --save {name}</code></p>
         </Level>
         {children}
       </div>

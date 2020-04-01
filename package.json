@@ -61,6 +61,7 @@
     "@wasmuth/path-reducer": "0.1.6",
     "atom": "1.4.1",
     "compression": "1.7.4",
+    "mark-gor": "2.1.1",
     "polka": "0.5.2",
     "preact": "10.3.4",
     "prop-types": "15.7.2",

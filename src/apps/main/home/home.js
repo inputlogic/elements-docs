@@ -1,3 +1,4 @@
+import { parse } from 'mark-gor'
 import { useMappedState } from '@app-elements/use-mapped-state'
 
 import { ElementHolder } from '/elements/element-holder'
@@ -34,6 +35,12 @@ const Anchors = () => {
   )
 }
 
+const Markdown = ({ markdown }) => {
+  const parsed = parse(markdown)
+  console.log(parsed)
+  return parsed
+}
+
 export function Home () {
   console.log({ components })
   return (
@@ -44,9 +51,10 @@ export function Home () {
         </div>
 
         <div className='elements-content'>
-          {components.map(({ name, component, description, version }) =>
+          {components.map(({ name, component, description, version, docs }) =>
             <ElementHolder key={name} heading={component} name={name} version={version}>
               <p>{description}</p>
+              <Markdown markdown={docs} />
             </ElementHolder>
           )}
         </div>
