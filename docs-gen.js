@@ -19,6 +19,16 @@ const getComponentName = (packageName) => {
   return parts[parts.length - 1].split('-').map(capFirst).join('')
 }
 
+const splitter = (str) => {
+  const i = str.indexOf('\n\n')
+  const key = str.slice(0, i)
+  let mark = str.slice(i + 1)
+  if (mark.indexOf('\n') === 0) {
+    mark = mark.substring(1)
+  }
+  return [key, mark]
+}
+
 readdir(DIR, (err, files) => {
   if (err) {
     console.error(err.stack)
@@ -47,7 +57,12 @@ readdir(DIR, (err, files) => {
           component: getComponentName(pkg.name),
           description: pkg.description,
           version: pkg.version,
-          docs
+          docs: docs
+            .split('## ')
+            .slice(1)
+            .filter(s => !s.includes('npm install'))
+            .map(splitter)
+            .filter(p => p[1].length > 1)
         })
         if (idx === max) out()
       })

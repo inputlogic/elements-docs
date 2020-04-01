@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import { parse } from 'mark-gor'
 import { useMappedState } from '@app-elements/use-mapped-state'
 
@@ -54,7 +55,12 @@ export function Home () {
           {components.map(({ name, component, description, version, docs }) =>
             <ElementHolder key={name} heading={component} name={name} version={version}>
               <p>{description}</p>
-              <Markdown markdown={docs} />
+              {docs.map(([title, content]) =>
+                <Fragment key={`${name}-${title}`}>
+                  <h3>{title}</h3>
+                  <Markdown markdown={content} />
+                </Fragment>
+              )}
             </ElementHolder>
           )}
         </div>
