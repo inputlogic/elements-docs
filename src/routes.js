@@ -6,11 +6,7 @@ export default [
     url: '',
     routes: {
       home: '/',
-      login: '/login',
-      signup: '/signup',
-      forgotPassword: '/forgot-password',
-      users: '/users',
-      user: '/users/:id'
+      documentation: '/documentation/:name'
     }
   },
   {

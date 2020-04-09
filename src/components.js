@@ -32,170 +32,22 @@ export const components = [
     ]
   },
   {
-    "name": "@app-elements/date-picker",
-    "component": "DatePicker",
-    "description": "Simple calendar-style date-picker.",
-    "version": "0.2.0",
+    "name": "@app-elements/dropdown",
+    "component": "Dropdown",
+    "description": "Simple dropdown menus.",
+    "version": "3.0.2",
     "docs": [
       [
         "Usage",
-        "```javascript\nimport { DatePicker } from '@app-elements/date-picker'\n\n// DatePicker expects it's state to be controlled by a parent Component.\n// This will often mean we set and get the value of the DatePicker in our\n// global state, but for this example, we will handle the state in the\n// parent Component.\n\nfunction StatefulComponent () {\n  const [date, setDate] = useState()\n  \n  return (\n    <DatePicker\n      selectedDate={date}\n      {/* Storing Dates is dangerous as they are mutable, and more troublesome\n          when used for memoization or shallow compares. */}\n      onChange={day => setDate(day.getTime())}\n    />\n  )\n}\n```\n\n`DateRangePicker` is just slightly different:\n\n```javascript\nimport { DateRangePicker } from '@app-elements/date-picker'\n\nfunction StatefulComponent () {\n  const [start, setStart] = useState()\n  const [end, setEnd] = useState()\n  \n  const onDateRange = ({ startDate, endDate }) => {\n    if (startDate != null) {\n      setStart(startDate.getTime())\n    } else if (endDate != null) {\n      setEnd(endDate.getTime())\n    } else if (startDate == null && endDate == null) {\n      // If the user taps the existing startDate again, we\n      // clear the selections.\n      setStart(null)\n      setEnd(null)\n    }\n  }\n  \n  return (\n    <DateRangePicker\n      startDate={start}\n      endDate={end}\n      onChange={onDateRange}\n    />\n  )\n}\n```\n\n"
+        "```javascript\nimport Dropdown from '@app-elements/dropdown'\n\n<Dropdown uid='home-example'>\n  <p><button onClick={ev => store.setState({modal: 'ExampleModal'})}>Open Example Modal</button></p>\n  <p><button onClick={ev => showNotification({message: 'PIRATES!'})}>Pirates!</button></p>\n  <p>Classy Penguin</p>\n</Dropdown>\n```\n\n#"
       ],
       [
-        "DatePicker",
-        "| Prop                   | Type       | Default       | Description         |\n|------------------------|------------|---------------|---------------------|\n| **`weekStartDay`**     | _Number_   | `0`           | Day of the week to start on, `0` being Sunday. [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getDay)\n| **`selectedDate`**     | _Number_   | _None_        | The selected Date in ms, use `.getTime()` or `.valueOf()`. [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTime)\n| **`onChange`**         | _Function_ | _None_        | Callback when user selects a day. Will be given a Date.\n\n\n#"
-      ],
-      [
-        "DateRangePicker",
-        "| Prop                   | Type       | Default       | Description         |\n|------------------------|------------|---------------|---------------------|\n| **`weekStartDay`**     | _Number_   | `0`           | Day of the week to start on, `0` being Sunday. [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getDay)\n| **`startDate`**        | _Number_   | _None_        | The selected start Date in ms, use `.getTime()` or `.valueOf()`. [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTime)\n| **`endDate`**          | _Number_   | _None_        | The selected end Date in ms, use `.getTime()` or `.valueOf()`. [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTime)\n| **`onChange`**         | _Function_ | _None_        | Callback when user selects a day. Will be given an object that may contain `startDate` and/or `endDate`.\n"
-      ]
-    ]
-  },
-  {
-    "name": "@app-elements/image",
-    "component": "Image",
-    "description": "",
-    "version": "1.1.5",
-    "docs": [
-      [
-        "Usage",
-        "```javascript\nimport Image from '@app-elements/image'\n\n<Image\n  srcs={[\n    'http://www.placehold.it/200x150/eee/eee?text=Loading',\n    'http://www.placehold.it/400x300/f44/fff?text=MediumRes',\n    'http://www.placehold.it/800x600/44f/fff?text=HighRes'\n  ]}\n/>\n```\n\n"
+        "Custom Trigger",
+        "```javascript\n// If you provide a Component or function for the Trigger prop,\n// it will be given the following props: `className='btn-dropdown' onClick={handleToggle}`\n// You will need to pass these props down, so the Dropdown functionality\n// works with your custom Trigger component.\n<Dropdown uid='home-example' Trigger={props => <MyTrigger {...props}>Custom Trigger</MyTrigger>}>\n```\n\n"
       ],
       [
         "Props",
-        "| Prop              | Type        | Default  | Description         |\n|-------------------|-------------|----------|---------------------|\n| **`srcs`**        | _Array_     | _None_   | An array of image URLs.\n"
-      ]
-    ]
-  },
-  {
-    "name": "@app-elements/interval",
-    "component": "Interval",
-    "description": "Call some function on an interval during the lifecycle of a component",
-    "version": "1.0.4",
-    "docs": [
-      [
-        "Usage",
-        "```javascript\nimport Interval from '@app-elements/interval'\n\n<Interval function={() => console.log('hello')} interval={3000} >\n  <h1>Hi</h1>\n</Interval>\n```\n\n#"
-      ],
-      [
-        "Real-word Example",
-        "```javascript\n// dispatch(invalidate('<url>')) will force <url> to be fetched again.\n<Interval function={() => dispatch(invalidate('api/messages'))} interval={3000} >\n  <ListResource endpoint='api/messages' >\n    {W.map(message => <div>{message.body}</div>)}\n  </ListResource>\n</Interval>\n```\n\n"
-      ],
-      [
-        "Props",
-        "| Prop                   | Type        | Default    | Description         |\n|------------------------|-------------|------------|---------------------|\n| **`function`**         | _Function_  | _None_     | The function to call.\n| **`interval`**         | _Number_    | `3000`     | The interval in milliseconds to call the function.\n"
-      ]
-    ]
-  },
-  {
-    "name": "@app-elements/level",
-    "component": "Level",
-    "description": "Position all children on a level row.",
-    "version": "1.0.3",
-    "docs": [
-      [
-        "Usage",
-        "```javascript\nimport Image from '@app-elements/level'\n\n<Level>\n  <button>One</button>\n  <button>Two</button>\n  <button>Three</button>\n</Level>\n```\n"
-      ]
-    ]
-  },
-  {
-    "name": "@app-elements/lazy-load",
-    "component": "LazyLoad",
-    "description": "Won't render children until it's in viewport.",
-    "version": "1.0.2",
-    "docs": [
-      [
-        "Usage",
-        "```javascript\nimport LazyLoad from '@app-elements/lazy-load'\n\n<LazyLoad>\n  <BigHeftyVideo />\n</LazyLoad>\n```\n"
-      ]
-    ]
-  },
-  {
-    "name": "@app-elements/loading-indicator",
-    "component": "LoadingIndicator",
-    "description": "Show a three dots loading indicator.",
-    "version": "1.1.0",
-    "docs": [
-      [
-        "Usage",
-        "```javascript\nimport LoadingIndicator from '@app-elements/loading-indicator'\n\n<LoadingIndicator />\n```\n\n"
-      ],
-      [
-        "Size/Color",
-        "Set size and color in your local css.\n\n```css\n.loading-ellipsis span {\n  font-size: 1.25em;\n  color: @primary-color;\n}\n"
-      ]
-    ]
-  },
-  {
-    "name": "@app-elements/notification",
-    "component": "Notification",
-    "description": "",
-    "version": "2.0.0",
-    "docs": [
-      [
-        "Usage",
-        "```javascript\nimport Notification, { showNotification } from '@app-elements/notification'\n\n// Place in your root App component. Should only be rendered once in your DOM tree.\n<Notification />\n\n// To show a notification\nshowNotification({ message: 'PIRATES!' })\n```\n\n"
-      ],
-      [
-        "`showNotification` options",
-        "| Prop                   | Type       | Default       | Description         |\n|------------------------|------------|---------------|---------------------|\n| **`message`**          | _String_   | _None_        | The text to display in the notification\n| **`type`**             | _Enum_     | `'error'`     | The class to use for the notication style. One of: `[ 'error', 'warning', 'success' ]`\n| **`length`**           | _Number_   | `3000`        | Time to keep the message displayed in milliseconds\n"
-      ]
-    ]
-  },
-  {
-    "name": "@app-elements/modal",
-    "component": "Modal",
-    "description": "Display modals from anywhere in your component tree.",
-    "version": "3.1.0",
-    "docs": [
-      [
-        "Usage",
-        "First, you need to have a root dom node to render modals into. So inside your `<body>` add `<div id='modals' />`.\n\nThen, you need to define at least one modal. The only requirement is that the top-level element for your Component needs to be `<Modal />`:\n\n```javascript\nimport Modal from '@app-elements/modal'\n\nconst ExampleModal = () =>\n  <Modal>\n    <h1>Example Modal</h1>\n  </Modal>\n\nexport default ExampleModal\n```\n\nNow, you need to nest your `ExampleModal` in a `<Modals />` instance:\n\n```javascript\nimport { Modals } from '@app-elements/modal'\nimport ExampleModal from '/modals/example-modal'\n\nconst MainApp = () =>\n  <div>\n    <Router routes={routes} />\n    <Modals>\n      <ExampleModal />\n    </Modals>\n  </div>\n```\n\nYou can nest as many modals as you wish under a `<Modals />` instance, and Modals will figure out which, if any, of the modals it should render.\n\nTo show a modal, set the name in the global state:\n\n```javascript\nimport { setState } from '/store'\n\n// 'ExampleModal' matches up with the name of the modal variable.\nsetState({ modal: 'ExampleModal' })\n// For example, `const AnotherModal = () => <Modal>/* ... */</Modal>`\n// could be opened by calling `setState({ modal: 'AnotherModal' })`\n```\n\n"
-      ],
-      [
-        "`<Modal />` Props",
-        "| Prop                   | Type        | Default       | Description         |\n|------------------------|-------------|---------------|---------------------|\n| **`className`**        | _String_    | _None_        | A class name to be added on the `.modal-container` div\n| **`hideClose`**        | _Boolean_   | _false_       | Should the modal render without a 'x' close button?  \n| **`children`**         | _Array_     | _None_        | The elements to display when the Modal is open.\n\n"
-      ],
-      [
-        "`<Modals />` Props",
-        "| Prop                   | Type        | Default       | Description         |\n|------------------------|-------------|---------------|---------------------|\n| **`children`**         | _Array_     | _None_        | The modals to display to potentially display if their name matches `modal` key on the global store.\n"
-      ]
-    ]
-  },
-  {
-    "name": "@app-elements/helmet",
-    "component": "Helmet",
-    "description": "Basic Component to set title and meta tags in your HTML.",
-    "version": "2.1.0",
-    "docs": [
-      [
-        "Usage",
-        "`Helmet` can be declared in your JSX many times. Each time, the result will be merged with the previous. It follows the order of your React tree, meaning the last (or \"most nested\") `Helmet` declared in your React tree will take precedence.\n\nSay, in your root Component:\n\n```javascript\nimport Helmet from '@app-elements/helmet'\n\n<Helmet\n  title='Welcome'\n  titleTemplate='PWA Starter | %s'\n  defaultTitle='Welcome'\n/>\n```\n\nThen, in some nested child Component:\n\n```javascript\n<Helmet\n  title='Nested Title'\n/>\n```\n\nThe resulting object representation would be:\n\n```json\n{\n  \"title\": \"Nested Title\",\n  \"titleTemplate\": \"PWA Starter | %s\",\n  \"defaultTitle\": \"Welcome\"\n}\n```\n\nThe `document.title` will be updated each time a Helmet instance is rendered. However, the meta tags are only rendered once (and still give precedence to the last `Helmet` in the tree). This means the meta tags are set properly on initial load and when rendering on the server. So, when you share a link on social media, the correct OG tags or other meta tags will be used. But, the meta tags will not update after initial load. From what I can tell, this has no negative affect.\n\n\n#"
-      ],
-      [
-        "Server-Side Rendering",
-        "You can see full working code in [PWA Starter](https://github.com/inputlogic/pwa-starter/blob/master/server/renderReact.js), but here are the key bits:\n\n```javascript\nimport render from 'preact-render-to-string'\n\nimport Helmet, {rewind} from '@app-elements/helmet'\n\nconst head = render(<Helmet {...rewind()} />).slice(5, -6) // slice off `<head>`, `</head>` tags\n\n// ...\napp.get('*', (req, res) => {\n  /// ...\n  res.send(`\n    <html lang=\"en\">\n      <head>\n        <base href=\"/\">\n        <meta charset=\"utf-8\">\n        <link rel=\"stylesheet\" href=\"./bundle.css\" />\n        ${head}\n      </head>\n      <body>\n        <div class='main-app-container'>${html}</div>\n        <script>window.__initial_store__ = ${JSON.stringify(state)};</script>\n        <script src=\"./bundle.js\"></script>\n      </body>\n    </html> \n  `) \n})\n```\n\n"
-      ],
-      [
-        "Props",
-        "| Prop                   | Type        | Default       | Description         |\n|------------------------|-------------|---------------|---------------------|\n| **`title`**            | _String_    | _None_        | The title to set. Will be used inside the `titleTemplate` string.\n| **`titleTemplate`**    | _String_    | `'%s'`        | Format your title strings. `%s` will be replaced with current title. Ex. `'%s | My Cool Site'`\n| **`defaultTitle`**     | _String_    | _None_        | The default value to replace `%s` with in your `titleTemplate`. Ex. `'Home'`\n| **`meta`**             | _Array_     | _None_        | An array of objects representing `<meta />` tags. Supports `name`, `property`, `content` attributes.\n"
-      ]
-    ]
-  },
-  {
-    "name": "@app-elements/pagination",
-    "component": "Pagination",
-    "description": "Display pagination links for a url that follows DRF format.",
-    "version": "1.1.3",
-    "docs": [
-      [
-        "Usage",
-        "Pagination is usually used in conjuction with an API request. So, in our case, we'll rely on [withRequest](components/with-request).\n\n```javascript\nimport Pagination from '@app-elements/pagination'\nimport withRequest from '@app-elements/with-request'\n\n// Here's a Component that will render the results of an API request\n// for a list of users. We're leaving out `UserDetail` in this example.\n// But it would basically be `({ name, email }) => <div>{name} / {email}</div>`\n// In this case we are assuming our Router would pass us the `pageId`:\n//   {\n//     users: {\n//       path: '/users/:pageId',\n//       component: UsersList\n//     }\n//   }\nconst UsersList = ({ pageId, isLoading, error, result }) =>\n  <div>\n    {isLoading && <p>Loading...</p>}\n    {error != null && <strong>{error}</strong>}\n    {result != null &&\n      <div>\n        {result.results.map(UserDetail)}\n        <Pagination\n          activePage={pageId}\n          request={result}\n          pageSize={25}\n        />\n      </div>\n    }\n  </div>\n\n// Let's use withRequest to make a request on our API.\nexport default withRequest({\n  endpoint: 'https://jsonplaceholder.typicode.com/users'\n})(UsersList)\n```\n\n"
-      ],
-      [
-        "Props",
-        "| Prop              | Type        | Default  | Description         |\n|-------------------|-------------|----------|---------------------|\n| **`activePage`**  | _Number_    | _None_   | The current active page. First page would be `1` not `0`\n| **`pageSize`**    | _Number_    | _None_   | How many results to show per page\n| **`request`**     | _Object_    | _None_   | The JSON returned from a list API endpoint formatted as [LimitOffsetPagination] (https://www.django-rest-framework.org/api-guide/pagination/#limitoffsetpagination)\n"
+        "| Prop                   | Type        | Default       | Description         |\n|------------------------|-------------|---------------|---------------------|\n| **`uid`**              | _String_    | _None_        | Unique identifier for the dropdown.\n| **`buttonText`**       | _String_    | `'Select'`    | Text displayed in the default button trigger for the Dropdown.\n| **`noWrapper`**        | _Boolean_   | `false`       | If `true`, will render `children` without any wrapping `div`s.\n| **`Trigger`**          | _Component_ | _None_        | Any provided Component will replace the default `button` trigger.\n| **`children`**         | _Array_     | _None_        | The elements to display when the Dropdown is open.\n"
       ]
     ]
   },
@@ -224,22 +76,122 @@ export const components = [
     ]
   },
   {
-    "name": "@app-elements/dropdown",
-    "component": "Dropdown",
-    "description": "Simple dropdown menus.",
-    "version": "3.0.1",
+    "name": "@app-elements/helmet",
+    "component": "Helmet",
+    "description": "Basic Component to set title and meta tags in your HTML.",
+    "version": "2.1.0",
     "docs": [
       [
         "Usage",
-        "```javascript\nimport Dropdown from '@app-elements/dropdown'\n\n<Dropdown uid='home-example'>\n  <p><button onClick={ev => store.setState({modal: 'ExampleModal'})}>Open Example Modal</button></p>\n  <p><button onClick={ev => showNotification({message: 'PIRATES!'})}>Pirates!</button></p>\n  <p>Classy Penguin</p>\n</Dropdown>\n```\n\n#"
+        "`Helmet` can be declared in your JSX many times. Each time, the result will be merged with the previous. It follows the order of your React tree, meaning the last (or \"most nested\") `Helmet` declared in your React tree will take precedence.\n\nSay, in your root Component:\n\n```javascript\nimport Helmet from '@app-elements/helmet'\n\n<Helmet\n  title='Welcome'\n  titleTemplate='PWA Starter | %s'\n  defaultTitle='Welcome'\n/>\n```\n\nThen, in some nested child Component:\n\n```javascript\n<Helmet\n  title='Nested Title'\n/>\n```\n\nThe resulting object representation would be:\n\n```json\n{\n  \"title\": \"Nested Title\",\n  \"titleTemplate\": \"PWA Starter | %s\",\n  \"defaultTitle\": \"Welcome\"\n}\n```\n\nThe `document.title` will be updated each time a Helmet instance is rendered. However, the meta tags are only rendered once (and still give precedence to the last `Helmet` in the tree). This means the meta tags are set properly on initial load and when rendering on the server. So, when you share a link on social media, the correct OG tags or other meta tags will be used. But, the meta tags will not update after initial load. From what I can tell, this has no negative affect.\n\n\n#"
       ],
       [
-        "Custom Trigger",
-        "```javascript\n// If you provide a Component or function for the Trigger prop,\n// it will be given the following props: `className='btn-dropdown' onClick={handleToggle}`\n// You will need to pass these props down, so the Dropdown functionality\n// works with your custom Trigger component.\n<Dropdown uid='home-example' Trigger={props => <MyTrigger {...props}>Custom Trigger</MyTrigger>}>\n```\n\n"
+        "Server-Side Rendering",
+        "You can see full working code in [PWA Starter](https://github.com/inputlogic/pwa-starter/blob/master/server/renderReact.js), but here are the key bits:\n\n```javascript\nimport render from 'preact-render-to-string'\n\nimport Helmet, {rewind} from '@app-elements/helmet'\n\nconst head = render(<Helmet {...rewind()} />).slice(5, -6) // slice off `<head>`, `</head>` tags\n\n// ...\napp.get('*', (req, res) => {\n  /// ...\n  res.send(`\n    <html lang=\"en\">\n      <head>\n        <base href=\"/\">\n        <meta charset=\"utf-8\">\n        <link rel=\"stylesheet\" href=\"./bundle.css\" />\n        ${head}\n      </head>\n      <body>\n        <div class='main-app-container'>${html}</div>\n        <script>window.__initial_store__ = ${JSON.stringify(state)};</script>\n        <script src=\"./bundle.js\"></script>\n      </body>\n    </html> \n  `) \n})\n```\n\n"
       ],
       [
         "Props",
-        "| Prop                   | Type        | Default       | Description         |\n|------------------------|-------------|---------------|---------------------|\n| **`uid`**              | _String_    | _None_        | Unique identifier for the dropdown.\n| **`buttonText`**       | _String_    | `'Select'`    | Text displayed in the default button trigger for the Dropdown.\n| **`noWrapper`**        | _Boolean_   | `false`       | If `true`, will render `children` without any wrapping `div`s.\n| **`Trigger`**          | _Component_ | _None_        | Any provided Component will replace the default `button` trigger.\n| **`children`**         | _Array_     | _None_        | The elements to display when the Dropdown is open.\n"
+        "| Prop                   | Type        | Default       | Description         |\n|------------------------|-------------|---------------|---------------------|\n| **`title`**            | _String_    | _None_        | The title to set. Will be used inside the `titleTemplate` string.\n| **`titleTemplate`**    | _String_    | `'%s'`        | Format your title strings. `%s` will be replaced with current title. Ex. `'%s | My Cool Site'`\n| **`defaultTitle`**     | _String_    | _None_        | The default value to replace `%s` with in your `titleTemplate`. Ex. `'Home'`\n| **`meta`**             | _Array_     | _None_        | An array of objects representing `<meta />` tags. Supports `name`, `property`, `content` attributes.\n"
+      ]
+    ]
+  },
+  {
+    "name": "@app-elements/image",
+    "component": "Image",
+    "description": "",
+    "version": "1.1.5",
+    "docs": [
+      [
+        "Usage",
+        "```javascript\nimport Image from '@app-elements/image'\n\n<Image\n  srcs={[\n    'http://www.placehold.it/200x150/eee/eee?text=Loading',\n    'http://www.placehold.it/400x300/f44/fff?text=MediumRes',\n    'http://www.placehold.it/800x600/44f/fff?text=HighRes'\n  ]}\n/>\n```\n\n"
+      ],
+      [
+        "Props",
+        "| Prop              | Type        | Default  | Description         |\n|-------------------|-------------|----------|---------------------|\n| **`srcs`**        | _Array_     | _None_   | An array of image URLs.\n"
+      ]
+    ]
+  },
+  {
+    "name": "@app-elements/level",
+    "component": "Level",
+    "description": "Position all children on a level row.",
+    "version": "1.0.3",
+    "docs": [
+      [
+        "Usage",
+        "```javascript\nimport Image from '@app-elements/level'\n\n<Level>\n  <button>One</button>\n  <button>Two</button>\n  <button>Three</button>\n</Level>\n```\n"
+      ]
+    ]
+  },
+  {
+    "name": "@app-elements/interval",
+    "component": "Interval",
+    "description": "Call some function on an interval during the lifecycle of a component",
+    "version": "1.0.4",
+    "docs": [
+      [
+        "Usage",
+        "```javascript\nimport Interval from '@app-elements/interval'\n\n<Interval function={() => console.log('hello')} interval={3000} >\n  <h1>Hi</h1>\n</Interval>\n```\n\n#"
+      ],
+      [
+        "Real-word Example",
+        "```javascript\n// dispatch(invalidate('<url>')) will force <url> to be fetched again.\n<Interval function={() => dispatch(invalidate('api/messages'))} interval={3000} >\n  <ListResource endpoint='api/messages' >\n    {W.map(message => <div>{message.body}</div>)}\n  </ListResource>\n</Interval>\n```\n\n"
+      ],
+      [
+        "Props",
+        "| Prop                   | Type        | Default    | Description         |\n|------------------------|-------------|------------|---------------------|\n| **`function`**         | _Function_  | _None_     | The function to call.\n| **`interval`**         | _Number_    | `3000`     | The interval in milliseconds to call the function.\n"
+      ]
+    ]
+  },
+  {
+    "name": "@app-elements/file-upload",
+    "component": "FileUpload",
+    "description": "File upload component.",
+    "version": "0.1.0",
+    "docs": [
+      [
+        "Usage",
+        "```javascript\nimport { DatePicker } from '@app-elements/date-picker'\n\n// DatePicker expects it's state to be controlled by a parent Component.\n// This will often mean we set and get the value of the DatePicker in our\n// global state, but for this example, we will handle the state in the\n// parent Component.\n\nfunction StatefulComponent () {\n  const [date, setDate] = useState()\n  \n  return (\n    <DatePicker\n      selectedDate={date}\n      {/* Storing Dates is dangerous as they are mutable, and more troublesome\n          when used for memoization or shallow compares. */}\n      onChange={day => setDate(day.getTime())}\n    />\n  )\n}\n```\n\n`DateRangePicker` is just slightly different:\n\n```javascript\nimport { DateRangePicker } from '@app-elements/date-picker'\n\nfunction StatefulComponent () {\n  const [start, setStart] = useState()\n  const [end, setEnd] = useState()\n  \n  const onDateRange = ({ startDate, endDate }) => {\n    if (startDate != null) {\n      setStart(startDate.getTime())\n    } else if (endDate != null) {\n      setEnd(endDate.getTime())\n    } else if (startDate == null && endDate == null) {\n      // If the user taps the existing startDate again, we\n      // clear the selections.\n      setStart(null)\n      setEnd(null)\n    }\n  }\n  \n  return (\n    <DateRangePicker\n      startDate={start}\n      endDate={end}\n      onChange={onDateRange}\n    />\n  )\n}\n```\n\nSometimes you'll want full control over the layout and style of the DatePicker. If that's the case, just pass in your custom component as a child of DatePicker or DateRangePicker.\n\n```javascript\nconst MyCustomDateRangePicker = (props) =>\n  <DateRangePicker {...props} />\n    {({month, monthString, year, onClickPreviousMonth, onClickNextMonth, dayHeaders, calendar, classNamesForDay, onClickDay}) => \n      <div>\n        {/* See `date-picker.js` for an example of what goes inside `div` */}\n      </div>\n    )}\n  </DateRangePicker>\n```\n\n"
+      ],
+      [
+        "DatePicker",
+        "| Prop                   | Type       | Default       | Description         |\n|------------------------|------------|---------------|---------------------|\n| **`weekStartDay`**     | _Number_   | `0`           | Day of the week to start on, `0` being Sunday. [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getDay)\n| **`selectedDate`**     | _Number_   | _None_        | The selected Date in ms, use `.getTime()` or `.valueOf()`. [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTime)\n| **`onChange`**         | _Function_ | _None_        | Callback when user selects a day. Will be given a Date.\n\n\n#"
+      ],
+      [
+        "DateRangePicker",
+        "| Prop                   | Type       | Default       | Description         |\n|------------------------|------------|---------------|---------------------|\n| **`weekStartDay`**     | _Number_   | `0`           | Day of the week to start on, `0` being Sunday. [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getDay)\n| **`startDate`**        | _Number_   | _None_        | The selected start Date in ms, use `.getTime()` or `.valueOf()`. [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTime)\n| **`endDate`**          | _Number_   | _None_        | The selected end Date in ms, use `.getTime()` or `.valueOf()`. [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTime)\n| **`onChange`**         | _Function_ | _None_        | Callback when user selects a day. Will be given an object that may contain `startDate` and/or `endDate`.\n"
+      ]
+    ]
+  },
+  {
+    "name": "@app-elements/date-picker",
+    "component": "DatePicker",
+    "description": "Simple calendar-style date-picker.",
+    "version": "0.3.0",
+    "docs": [
+      [
+        "Usage",
+        "```javascript\nimport { DatePicker } from '@app-elements/date-picker'\n\n// DatePicker expects it's state to be controlled by a parent Component.\n// This will often mean we set and get the value of the DatePicker in our\n// global state, but for this example, we will handle the state in the\n// parent Component.\n\nfunction StatefulComponent () {\n  const [date, setDate] = useState()\n  \n  return (\n    <DatePicker\n      selectedDate={date}\n      {/* Storing Dates is dangerous as they are mutable, and more troublesome\n          when used for memoization or shallow compares. */}\n      onChange={day => setDate(day.getTime())}\n    />\n  )\n}\n```\n\n`DateRangePicker` is just slightly different:\n\n```javascript\nimport { DateRangePicker } from '@app-elements/date-picker'\n\nfunction StatefulComponent () {\n  const [start, setStart] = useState()\n  const [end, setEnd] = useState()\n  \n  const onDateRange = ({ startDate, endDate }) => {\n    if (startDate != null) {\n      setStart(startDate.getTime())\n    } else if (endDate != null) {\n      setEnd(endDate.getTime())\n    } else if (startDate == null && endDate == null) {\n      // If the user taps the existing startDate again, we\n      // clear the selections.\n      setStart(null)\n      setEnd(null)\n    }\n  }\n  \n  return (\n    <DateRangePicker\n      startDate={start}\n      endDate={end}\n      onChange={onDateRange}\n    />\n  )\n}\n```\n\nSometimes you'll want full control over the layout and style of the DatePicker. If that's the case, just pass in your custom component as a child of DatePicker or DateRangePicker.\n\n```javascript\nconst MyCustomDateRangePicker = (props) =>\n  <DateRangePicker {...props} />\n    {({month, monthString, year, onClickPreviousMonth, onClickNextMonth, dayHeaders, calendar, classNamesForDay, onClickDay}) => \n      <div>\n        {/* See `date-picker.js` for an example of what goes inside `div` */}\n      </div>\n    )}\n  </DateRangePicker>\n```\n\n"
+      ],
+      [
+        "DatePicker",
+        "| Prop                   | Type       | Default       | Description         |\n|------------------------|------------|---------------|---------------------|\n| **`weekStartDay`**     | _Number_   | `0`           | Day of the week to start on, `0` being Sunday. [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getDay)\n| **`selectedDate`**     | _Number_   | _None_        | The selected Date in ms, use `.getTime()` or `.valueOf()`. [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTime)\n| **`onChange`**         | _Function_ | _None_        | Callback when user selects a day. Will be given a Date.\n\n\n#"
+      ],
+      [
+        "DateRangePicker",
+        "| Prop                   | Type       | Default       | Description         |\n|------------------------|------------|---------------|---------------------|\n| **`weekStartDay`**     | _Number_   | `0`           | Day of the week to start on, `0` being Sunday. [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getDay)\n| **`startDate`**        | _Number_   | _None_        | The selected start Date in ms, use `.getTime()` or `.valueOf()`. [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTime)\n| **`endDate`**          | _Number_   | _None_        | The selected end Date in ms, use `.getTime()` or `.valueOf()`. [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTime)\n| **`onChange`**         | _Function_ | _None_        | Callback when user selects a day. Will be given an object that may contain `startDate` and/or `endDate`.\n"
+      ]
+    ]
+  },
+  {
+    "name": "@app-elements/lazy-load",
+    "component": "LazyLoad",
+    "description": "Won't render children until it's in viewport.",
+    "version": "1.0.2",
+    "docs": [
+      [
+        "Usage",
+        "```javascript\nimport LazyLoad from '@app-elements/lazy-load'\n\n<LazyLoad>\n  <BigHeftyVideo />\n</LazyLoad>\n```\n"
       ]
     ]
   },
@@ -256,6 +208,74 @@ export const components = [
       [
         "Props",
         "| Prop             | Type        | Default       | Description         |\n|----------------- |-------------|---------------|---------------------|\n| **`endpoint`**   | _String_    | _None_        | The url to call\n| **`limit`**      | _Number_    | _None_        | A convenience prop for setting `?limit=${limit}` on the `endpoint` url\n| **`render`**     | _Component_ | _None_        | The Component to render for each item in the response `results` array\n| **`pagination`** | _Boolean_   | `false`       | Should ListResource also render a `<Pagination />` component?\n"
+      ]
+    ]
+  },
+  {
+    "name": "@app-elements/modal",
+    "component": "Modal",
+    "description": "Display modals from anywhere in your component tree.",
+    "version": "3.1.1",
+    "docs": [
+      [
+        "Usage",
+        "First, you need to have a root dom node to render modals into. So inside your `<body>` add `<div id='modals' />`.\n\nThen, you need to define at least one modal. The only requirement is that the top-level element for your Component needs to be `<Modal />`:\n\n```javascript\nimport Modal from '@app-elements/modal'\n\nconst ExampleModal = () =>\n  <Modal>\n    <h1>Example Modal</h1>\n  </Modal>\n\nexport default ExampleModal\n```\n\nNow, you need to nest your `ExampleModal` in a `<Modals />` instance:\n\n```javascript\nimport { Modals } from '@app-elements/modal'\nimport ExampleModal from '/modals/example-modal'\n\nconst MainApp = () =>\n  <div>\n    <Router routes={routes} />\n    <Modals>\n      <ExampleModal />\n    </Modals>\n  </div>\n```\n\nYou can nest as many modals as you wish under a `<Modals />` instance, and Modals will figure out which, if any, of the modals it should render.\n\nTo show a modal, set the name in the global state:\n\n```javascript\nimport { setState } from '/store'\n\n// 'ExampleModal' matches up with the name of the modal variable.\nsetState({ modal: 'ExampleModal' })\n// For example, `const AnotherModal = () => <Modal>/* ... */</Modal>`\n// could be opened by calling `setState({ modal: 'AnotherModal' })`\n```\n\n"
+      ],
+      [
+        "`<Modal />` Props",
+        "| Prop                   | Type        | Default       | Description         |\n|------------------------|-------------|---------------|---------------------|\n| **`className`**        | _String_    | _None_        | A class name to be added on the `.modal-container` div\n| **`hideClose`**        | _Boolean_   | _false_       | Should the modal render without a 'x' close button?  \n| **`children`**         | _Array_     | _None_        | The elements to display when the Modal is open.\n\n"
+      ],
+      [
+        "`<Modals />` Props",
+        "| Prop                   | Type        | Default       | Description         |\n|------------------------|-------------|---------------|---------------------|\n| **`children`**         | _Array_     | _None_        | The modals to display to potentially display if their name matches `modal` key on the global store.\n"
+      ]
+    ]
+  },
+  {
+    "name": "@app-elements/loading-indicator",
+    "component": "LoadingIndicator",
+    "description": "Show a three dots loading indicator.",
+    "version": "1.1.0",
+    "docs": [
+      [
+        "Usage",
+        "```javascript\nimport LoadingIndicator from '@app-elements/loading-indicator'\n\n<LoadingIndicator />\n```\n\n"
+      ],
+      [
+        "Size/Color",
+        "Set size and color in your local css.\n\n```css\n.loading-ellipsis span {\n  font-size: 1.25em;\n  color: @primary-color;\n}\n"
+      ]
+    ]
+  },
+  {
+    "name": "@app-elements/pagination",
+    "component": "Pagination",
+    "description": "Display pagination links for a url that follows DRF format.",
+    "version": "1.1.3",
+    "docs": [
+      [
+        "Usage",
+        "Pagination is usually used in conjuction with an API request. So, in our case, we'll rely on [withRequest](components/with-request).\n\n```javascript\nimport Pagination from '@app-elements/pagination'\nimport withRequest from '@app-elements/with-request'\n\n// Here's a Component that will render the results of an API request\n// for a list of users. We're leaving out `UserDetail` in this example.\n// But it would basically be `({ name, email }) => <div>{name} / {email}</div>`\n// In this case we are assuming our Router would pass us the `pageId`:\n//   {\n//     users: {\n//       path: '/users/:pageId',\n//       component: UsersList\n//     }\n//   }\nconst UsersList = ({ pageId, isLoading, error, result }) =>\n  <div>\n    {isLoading && <p>Loading...</p>}\n    {error != null && <strong>{error}</strong>}\n    {result != null &&\n      <div>\n        {result.results.map(UserDetail)}\n        <Pagination\n          activePage={pageId}\n          request={result}\n          pageSize={25}\n        />\n      </div>\n    }\n  </div>\n\n// Let's use withRequest to make a request on our API.\nexport default withRequest({\n  endpoint: 'https://jsonplaceholder.typicode.com/users'\n})(UsersList)\n```\n\n"
+      ],
+      [
+        "Props",
+        "| Prop              | Type        | Default  | Description         |\n|-------------------|-------------|----------|---------------------|\n| **`activePage`**  | _Number_    | _None_   | The current active page. First page would be `1` not `0`\n| **`pageSize`**    | _Number_    | _None_   | How many results to show per page\n| **`request`**     | _Object_    | _None_   | The JSON returned from a list API endpoint formatted as [LimitOffsetPagination] (https://www.django-rest-framework.org/api-guide/pagination/#limitoffsetpagination)\n"
+      ]
+    ]
+  },
+  {
+    "name": "@app-elements/notification",
+    "component": "Notification",
+    "description": "",
+    "version": "2.0.0",
+    "docs": [
+      [
+        "Usage",
+        "```javascript\nimport Notification, { showNotification } from '@app-elements/notification'\n\n// Place in your root App component. Should only be rendered once in your DOM tree.\n<Notification />\n\n// To show a notification\nshowNotification({ message: 'PIRATES!' })\n```\n\n"
+      ],
+      [
+        "`showNotification` options",
+        "| Prop                   | Type       | Default       | Description         |\n|------------------------|------------|---------------|---------------------|\n| **`message`**          | _String_   | _None_        | The text to display in the notification\n| **`type`**             | _Enum_     | `'error'`     | The class to use for the notication style. One of: `[ 'error', 'warning', 'success' ]`\n| **`length`**           | _Number_   | `3000`        | Time to keep the message displayed in milliseconds\n"
       ]
     ]
   },
